@@ -8,7 +8,7 @@ const app = express();
 app.use(
   cors({
     // origin: true,
-    origin: true,
+    origin: ["http://localhost:3000", "https://internal.digital-mafia.co.za/"],
   })
 );
 app.use(express.json());
