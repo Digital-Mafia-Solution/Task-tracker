@@ -3,8 +3,8 @@ import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 import axios from "axios";
 
-const TASKS_API = `http://localhost:5000/task-manager/tasks`;
-// const TASKS_API = `https://api.digital-mafia.com/task-manager/tasks`;
+// const TASKS_API = `http://localhost:5000/task-manager/tasks`;
+const TASKS_API = `https://api.digital-mafia.co.za/task-manager/tasks`;
 
 function App() {
   const [tasks, setTasks] = useState([]);
