@@ -7,6 +7,7 @@ const taskRoutes = require("./routes/Tasks");
 const app = express();
 app.use(
   cors({
+    // origin: true,
     origin: true,
   })
 );
@@ -19,4 +20,4 @@ sequelize.sync().then(() => {
   app.listen(5000, () => {
     console.log("🚀 Server running at https://api.digital-mafia.co.za");
   });
-}); 
+});
