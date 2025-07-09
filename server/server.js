@@ -7,8 +7,7 @@ const taskRoutes = require("./routes/Tasks");
 const app = express();
 app.use(
   cors({
-    // origin: "http://localhost:3000",
-    origin: "https://internal.digital-mafia.co.za",
+    origin: ["http://localhost:3000", "https://internal.digital-mafia.co.za"],
   })
 );
 app.use(express.json());
