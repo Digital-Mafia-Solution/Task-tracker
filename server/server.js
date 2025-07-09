@@ -18,6 +18,6 @@ app.use("/task-manager/tasks", taskRoutes);
 sequelize.sync().then(() => {
   console.log("✅ DB synced");
   app.listen(5000, () => {
-    console.log("🚀 Server running at http://localhost:5000");
+    console.log("🚀 Server running at https://api.digital-mafia.co.za");
   });
 }); 
