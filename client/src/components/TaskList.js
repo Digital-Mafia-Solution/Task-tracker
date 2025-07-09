@@ -1,6 +1,7 @@
 import React from "react";
+import { CheckIcon, EditIcon, DeleteIcon } from "./Icons";
 
-const TaskList = ({ tasks, onComplete }) => {
+const TaskList = ({ tasks, onComplete, onEdit, onDelete }) => {
   const sortPriority = { High: 1, Medium: 2, Low: 3 };
 
   // Safety check for tasks array
@@ -51,7 +52,7 @@ const TaskList = ({ tasks, onComplete }) => {
             <th>Priority</th>
             <th>Assigned To</th>
             <th>Status</th>
-            <th>Action</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -87,14 +88,31 @@ const TaskList = ({ tasks, onComplete }) => {
                 </span>
               </td>
               <td>
-                {!t.completed && (
+                <div className="action-buttons">
+                  {!t.completed && (
+                    <button
+                      onClick={() => onComplete(t.id)}
+                      className="btn btn-success btn-icon"
+                      title="Mark as completed"
+                    >
+                      <CheckIcon size={16} />
+                    </button>
+                  )}
                   <button
-                    onClick={() => onComplete(t.id)}
-                    className="btn btn-success"
+                    onClick={() => onEdit(t)}
+                    className="btn btn-warning btn-icon"
+                    title="Edit task"
                   >
-                    ✓ Mark Done
+                    <EditIcon size={16} />
                   </button>
-                )}
+                  <button
+                    onClick={() => onDelete(t.id)}
+                    className="btn btn-danger btn-icon"
+                    title="Delete task"
+                  >
+                    <DeleteIcon size={16} />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { PlusIcon } from "./Icons";
+import AutocompleteInput from "./AutocompleteInput";
+import { PEOPLE_LIST } from "../constants/people";
 
 const TaskForm = ({ onAdd }) => {
   const [task, setTask] = useState("");
@@ -51,15 +54,17 @@ const TaskForm = ({ onAdd }) => {
           </div>
           <div className="form-group">
             <label className="form-label">Assigned To</label>
-            <input
-              className="form-input"
+            <AutocompleteInput
               value={assignedTo}
-              onChange={(e) => setAssignedTo(e.target.value)}
-              placeholder="Enter name (optional)"
+              onChange={setAssignedTo}
+              placeholder="Enter name(s)"
+              suggestions={PEOPLE_LIST}
+              className="form-input"
             />
           </div>
         </div>
         <button type="submit" className="btn btn-primary">
+          <PlusIcon size={16} />
           Add Task
         </button>
       </form>

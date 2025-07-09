@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
+import EditTaskForm from "./components/EditTaskForm";
+import { SunIcon, MoonIcon } from "./components/Icons";
 import axios from "axios";
 
-const TASKS_API = `https://api.digital-mafia.co.za/task-manager/tasks`; // Will proxy to localhost:5000
+const TASKS_API = `https://api.digital-mafia.co.za/task-manager/tasks`;
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [editingTask, setEditingTask] = useState(null);
 
   // Load tasks from backend
   useEffect(() => {
@@ -54,6 +57,57 @@ function App() {
         alert("Failed to mark task as complete. Please try again.");
       });
   };
+
+  // Delete task
+  const handleDeleteTask = (taskId) => {
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      axios
+        .delete(`${TASKS_API}/${taskId}`)
+        .then(() => {
+          setTasks((prevTasks) =>
+            prevTasks.filter((task) => task.id !== taskId)
+          );
+        })
+        .catch((err) => {
+          console.error("Error deleting task:", err);
+          alert("Failed to delete task. Please try again.");
+        });
+    }
+  };
+
+  // Edit task
+  const handleEditTask = (task) => {
+    setEditingTask(task);
+  };
+
+  // Update task
+  const handleUpdateTask = (updatedTask) => {
+    console.log("Updating task:", updatedTask);
+    console.log("API URL:", `${TASKS_API}/${updatedTask.id}`);
+
+    axios
+      .put(`${TASKS_API}/${updatedTask.id}`, updatedTask)
+      .then((res) => {
+        console.log("Update successful:", res.data);
+        setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task.id === updatedTask.id ? res.data : task
+          )
+        );
+        setEditingTask(null);
+      })
+      .catch((err) => {
+        console.error("Error updating task:", err);
+        console.error("Error response:", err.response?.data);
+        console.error("Error status:", err.response?.status);
+        alert("Failed to update task. Please try again.");
+      });
+  };
+
+  // Cancel edit
+  const handleCancelEdit = () => {
+    setEditingTask(null);
+  };
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     document.body.classList.toggle("light", !isDarkMode);
@@ -70,10 +124,10 @@ function App() {
           <h1 className="app-title">Task Tracker</h1>
           <button
             onClick={toggleTheme}
-            className="btn theme-toggle"
+            className="btn theme-toggle btn-icon"
             aria-label="Toggle theme"
           >
-            {isDarkMode ? "☀️" : "🌙"}
+            {isDarkMode ? <SunIcon size={20} /> : <MoonIcon size={20} />}
           </button>
         </div>
         <p className="app-subtitle">
@@ -81,7 +135,19 @@ function App() {
         </p>
       </header>
       <TaskForm onAdd={handleAddTask} />
-      <TaskList tasks={tasks} onComplete={handleCompleteTask} />
+      <TaskList
+        tasks={tasks}
+        onComplete={handleCompleteTask}
+        onEdit={handleEditTask}
+        onDelete={handleDeleteTask}
+      />
+      {editingTask && (
+        <EditTaskForm
+          task={editingTask}
+          onUpdate={handleUpdateTask}
+          onCancel={handleCancelEdit}
+        />
+      )}
     </div>
   );
 }
