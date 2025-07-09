@@ -6,7 +6,7 @@ import { PEOPLE_LIST } from "../constants/people";
 const TaskForm = ({ onAdd }) => {
   const [task, setTask] = useState("");
   const [priority, setPriority] = useState("Medium");
-  const [assignedTo, setAssignedTo] = useState("");
+  const [assignedTo, setAssignedTo] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ const TaskForm = ({ onAdd }) => {
     onAdd(newTask); // send to App.js
     setTask("");
     setPriority("Medium");
-    setAssignedTo("");
+    setAssignedTo([]);
   };
 
   return (

@@ -1,6 +1,24 @@
 import React from "react";
 import { CheckIcon, EditIcon, DeleteIcon } from "./Icons";
 
+const Tag = ({ children }) => (
+  <span
+    className="tag"
+    style={{
+      display: "inline-flex",
+      alignItems: "center",
+      background: "#e0e0e0",
+      borderRadius: "12px",
+      padding: "2px 8px",
+      margin: "2px 4px 2px 0",
+      fontSize: "0.95em",
+      color: "#333",
+    }}
+  >
+    {children}
+  </span>
+);
+
 const TaskList = ({ tasks, onComplete, onEdit, onDelete }) => {
   const sortPriority = { High: 1, Medium: 2, Low: 3 };
 
@@ -35,6 +53,24 @@ const TaskList = ({ tasks, onComplete, onEdit, onDelete }) => {
   );
 
   const completedCount = tasks.filter((t) => t.completed).length;
+
+  const renderAssignedToTags = (assignedTo) => {
+    if (!assignedTo || assignedTo.length === 0) return "—";
+    // Support both array and string (semicolon-separated)
+    const names = Array.isArray(assignedTo)
+      ? assignedTo
+      : assignedTo
+          .split(";")
+          .map((n) => n.trim())
+          .filter(Boolean);
+    return (
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {names.map((name) => (
+          <Tag key={name}>{name}</Tag>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="task-list-container">
@@ -75,9 +111,7 @@ const TaskList = ({ tasks, onComplete, onEdit, onDelete }) => {
                   {t.priority}
                 </span>
               </td>
-              <td>
-                <div className="task-assignee">{t.assignedTo || "—"}</div>
-              </td>
+              <td>{renderAssignedToTags(t.assignedTo)}</td>
               <td>
                 <span
                   className={`status-badge ${

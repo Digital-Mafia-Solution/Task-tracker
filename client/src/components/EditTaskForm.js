@@ -4,9 +4,19 @@ import AutocompleteInput from "./AutocompleteInput";
 import { PEOPLE_LIST } from "../constants/people";
 
 const EditTaskForm = ({ task, onUpdate, onCancel }) => {
+  // Ensure assignedTo is always an array
+  const initialAssignedTo = Array.isArray(task.assignedTo)
+    ? task.assignedTo
+    : typeof task.assignedTo === "string" && task.assignedTo.trim() !== ""
+    ? task.assignedTo
+        .split(";")
+        .map((n) => n.trim())
+        .filter(Boolean)
+    : [];
+
   const [taskText, setTaskText] = useState(task.task);
   const [priority, setPriority] = useState(task.priority);
-  const [assignedTo, setAssignedTo] = useState(task.assignedTo || "");
+  const [assignedTo, setAssignedTo] = useState(initialAssignedTo);
 
   const handleSubmit = (e) => {
     e.preventDefault();
