@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "homepage": "https://internal.digital-mafia.co.za",
+  "homepage": "https://digital-mafia-solution.github.io/Task-tracker",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
