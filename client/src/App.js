@@ -166,7 +166,7 @@ function App() {
       />
       <header className="app-header">
         <div className="header-top">
-          <h1 className="app-title">Task Tracker</h1>
+          <h1 className="app-title">Task Manager</h1>
           <button
             onClick={toggleTheme}
             className="btn theme-toggle btn-icon"
