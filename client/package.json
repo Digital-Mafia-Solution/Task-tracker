@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "homepage": "https://internal.digital-mafia.co.za/task-manager",
+  "homepage": "/task-manager",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
